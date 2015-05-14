@@ -1,2 +1,2 @@
 # e-pickd
-projeto
+projeto mucho loko
