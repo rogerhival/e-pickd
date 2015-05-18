@@ -1,7 +1,7 @@
 {
-  "name": "hackinpoa-poa-emergencia-api",
+  "name": "e-pickd",
   "version": "0.0.1",
-  "description": "localiza e informa pessoas sobre emergência na cidade de Porto Alegre",
+  "description": "league of legends bet",
   "main": "app.js",
   "dependencies": {
     "body-parser": "^1.12.2",
@@ -22,12 +22,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/tbordao/hackinpoa-poa-emergencia-api.git"
+    "url": "https://github.com/rogerhival/e-pickd.git"
   },
   "author": "POA Emergências",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/tbordao/hackinpoa-poa-emergencia-api/issues"
+    "url": "https://github.com/rogerhival/e-pickd/issues"
   },
-  "homepage": "https://github.com/tbordao/hackinpoa-poa-emergencia-api"
+  "homepage": "https://github.com/rogerhival/e-pickd"
 }
