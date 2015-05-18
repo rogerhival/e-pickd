@@ -1,0 +1,189 @@
+{
+    users: {
+        userId: 1,
+        fullName: 'roger blablabal',
+        email: '',
+        createDate: date,
+        username: 'hivalera',
+        password: '****',
+        thumbURL: 'foto',
+        tokenId: '',
+        authenticationMode: 'FACEBOOK | GOOGLE | TWITTER',
+        birthDate: date
+    }
+
+    user_notifications:{
+        userNotificationId: 1,
+        userId: 1,
+        whoChampionshipId: nullable,
+        whoUserId: nullable,
+        text: '',
+        isReaded: true | false,
+        date: datetime
+    }
+
+    budgets: {
+        budgetId: 1,
+        userId: 1,
+        value: 0,
+    }
+
+    transactions: {
+        transactionId: 1,
+        budgetId: 1,
+        transactionType: 'DEPOSIT | WITHDRAW | WINNER'
+        value: moneything,
+        date: datetime,
+        status: 'APPROVED, PROCESSING, REFUSED'
+    }
+
+    games: {
+        gameId: 1,
+        type: 'PC | CONSOLE',
+        name: 'LEAGUE OF LEGENDS | COUNTER STRIKE'
+    }
+
+    season {
+        seasonId: 1,
+        name: ''
+    }
+
+    championships: {
+        championshipId: 1,
+        seasonId: 1,
+        gameId: 1,
+        name: '',
+        location: 'br, eu, na',
+        usersAllowed: number,
+        startDate: datetime,
+        status: 'waiting, started, finished',
+        teamWinnerId: 1,
+        thumbURL: ''
+    }
+
+    championships: {
+        championshipId: 1,
+        tournamentName: 'name',
+        namePublic,
+        contestants:{
+            contestant:{id,
+            name,
+            acronym
+        }
+        },
+        isFinished,
+        dateBegin,
+        dateEnd,
+        noVods,
+        season,
+        published,
+        winner
+
+    }
+
+    teams: {
+        teamId: 1,
+        name: 'skt t1 blablabla',
+        location: 'br, eu, na',
+        shortName: 'skt',
+        pointsAvg: number,
+        flagURL: image
+    }
+
+    players:{
+        playerId: 1,
+        name: '',
+        teamId: 1,
+        position: 'MID, JUNGLE, TOP, etc',
+        pointsAvg: number,
+        sallary: moneything
+    }
+
+    championship_teams:{
+        championTeamId: 1
+        championshipId: 1,
+        teamId: 1
+    }
+
+    user_championship_team:{
+        userChampionshipTeamId: 1,
+        userId: 1,
+        championshipId: 1,
+        name: ''
+    }
+
+    user_championship_team_players:{
+        userChampionTeamPlayerId: 1
+        userChampionshipTeamId: 1,
+        playerId: 1
+    }
+
+    matches:{
+        matchId: 1,
+        teamOneId: 1,
+        teamTwoId: 2
+
+
+    }
+
+}
+
+
+
+
+
+
+
+
+
+{
+    hospitals: {
+        institutionType: 'PUBLIC | PRIVATE',
+        type: 'PA | HOSPITAL',
+        name: '',
+        address: '',
+        phone: '',
+        location: {
+            lat: 123.99,
+            lon: 14.5
+        },
+        tags: ['cardio', 'obstetricia'],
+        checkin: 123
+    }
+}
+
+{
+    users:
+    {
+        name: 'joao',
+        authenticationMode: 'FACEBOOK | ANONYMOUS',
+        createDate: 1233413413415,
+        thumbURL: 'joao.jpg',
+        tokenId: 'XDRET%4545245/x'
+    }
+}
+
+{
+     checkin:
+    {
+        user: 'linked-to-users',
+        hospital: 'linked-to-hospitals'
+        dateIn: 134134135512,
+        dateOut: 13413415161451,
+        status: true|false //TRUE = atendido \ FALSE = esperando,
+        estimatedWaitingTime: 1.5,
+        waitingTime: 1 | null
+    }
+}
+
+{
+    comments:
+     {
+        user: 'linked-to-users',
+        hospital: 'linked-to-hospitals',
+        date: 141351145145,
+        comment: '140 characters like a tweet',
+        thumbsUp: 10,
+        thumbsDown: 3
+    }
+}
