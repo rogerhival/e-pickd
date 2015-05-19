@@ -15,6 +15,9 @@ var bodyParser = require('body-parser');
 var compression = require('compression');
 var morgan = require('morgan');
 
+// cors
+var cors = require('cors');
+
 // Bring in route services
 var hospitals = require('./routes/hospitals');
 var users = require('./routes/users');
@@ -26,6 +29,7 @@ app.set('port', process.env.PORT || 5000);
 app.use(bodyParser.json({limit: '1mb'})); // for parsing application/json
 
 app.use(compression()); // compress all requests
+app.use(cors());
 //app.use(db);
 
 // TODO: Set up access logs to write to a file
@@ -89,27 +93,6 @@ app.use('/api/', router);
       // respond with 500 "Internal Server Error".
       res.sendStatus(500);
   });
-  
-// Add headers
-app.use(function (req, res, next) {
-
-    // Website you wish to allow to connect
-    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:44475');
-
-    // Request methods you wish to allow
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-
-    // Request headers you wish to allow
-    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
-
-    // Set to true if you need the website to include cookies in the requests sent
-    // to the API (e.g. in case you use sessions)
-    res.setHeader('Access-Control-Allow-Credentials', true);
-
-    // Pass to next layer of middleware
-    next();
-});
-
 
 //   __  __    __    ____  _  _
 //  (  \/  )  /__\  (_  _)( \( )
