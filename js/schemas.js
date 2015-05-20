@@ -10,7 +10,6 @@ var _notificationSchema = new mongoose.Schema({
 });
 
 var _transactionSchema = new mongoose.Schema({
-	budgetId: {type:Number},
 	transactionType: {type:String},
 	value: {type:Number},
 	date: {type:Date},
@@ -23,18 +22,21 @@ var _userSchema = new mongoose.Schema({
 	createDate: {type:Date, default: Date.now},
 	username: {type: String},
 	password: {type:String},
-	thumbUrl: {type:String},
+	thumbURL: {type:String},
 	tokenId: {type:String},
 	authenticationMode: {type:String},
 	notifications:[_notificationSchema],
-	transactions: [_transactionSchema]
+	budget: {
+		value: {type:Number},
+		transactions: [_transactionSchema]
+	}
 });
 
-var _budgetSchema = new mongoose.Schema({
-	_id: {type: Number},
-	userId: {type: Number},
-	value: {type:Number}
-});
+// var _budgetSchema = new mongoose.Schema({
+// 	_id: {type: Number},
+// 	userId: {type: Number},
+// 	value: {type:Number}
+// });
 
 var _playerSchema = new mongoose.Schema({
 	_id: {type:Number},
@@ -111,7 +113,7 @@ var _userTeamSchema = new mongoose.Schema({
 exports.notification = _notificationSchema;
 exports.transaction = _transactionSchema;
 exports.user = _userSchema;
-exports.budget = _budgetSchema;
+//exports.budget = _budgetSchema;
 exports.player = _playerSchema;
 exports.contestant = _contestantSchema;
 exports.championship = _championshipSchema;

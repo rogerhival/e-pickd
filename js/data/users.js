@@ -9,8 +9,6 @@ var notifications = mongoose.model('notification', schemas.notification);
 var _getUser = function(userId) {
 
 	var deferred = Q.defer();
-
-	console.log('user id: ' + userId);
 	//get users
 	users.findById(userId).exec(function(err, user){
 		if(err) {
@@ -39,7 +37,7 @@ var _addUser = function(name, email, username, password, authenticationMode, thu
 		username:username,
 		password:password,
 		notifications:[],
-		transactions:[]
+		budget: { value: 0, transactions: [] }
 	}).save(function(err, user){
 		if(err){
 			deferred.reject(new Error(err));
@@ -51,6 +49,10 @@ var _addUser = function(name, email, username, password, authenticationMode, thu
 	});
 
 	return deferred.promise;
+}
+
+var _removeUser = function(userId){
+	users.findById(userId).remove().exec();
 }
 
 var _getUserNotifications = function(userId) {
@@ -116,10 +118,11 @@ var _getAll = function() {
 	return deferred.promise;
 }
 
-_getUserNotifications('555a1e32a89044c8051f3452');
+_addUser('roger', 'r@r.com', 'r', 'r2', 'normal', 'hehe.png', 'token123');
 
 exports.getUser = _getUser;
 exports.addUser = _addUser;
 exports.getUserNotifications = _getUserNotifications;
 exports.addUserNotification = _addUserNotification;
 exports.getAll = _getAll;
+exports.removeUser = _removeUser;
