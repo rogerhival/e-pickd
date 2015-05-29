@@ -54,13 +54,13 @@ router.post('/user', users.addUser);
 // GET /users
 router.get('/users', users.getAll);
 // GET /users/:uid - busca user por user id (uid)
-router.get('/user/:uid', users.getUsers);
+router.get('/user/:uid', users.getUser);
 // GET /user/:uid/notifications - buscar notificações do usuario
 router.get('/user/:uid/notifications', users.getUserNotifications);
 // POST /user/:uid/notification - adiciona notificação ao usuário
 router.post('/user/:uid/notification', users.addUserNotification);
 //POST /user/:uid:/transaction
-router.post('/user/:uid/transaction', users.addUserTransactions);
+router.post('/user/:uid/transaction', users.addUserTransaction);
 //POST /user/:uid/transaction/:transactionId/changeStatus
 router.post('/user/:uid/transaction/:transactionId/changeStatus', users.changeTransactionStatus);
 //DELETE /user/:uid
@@ -72,7 +72,7 @@ router.get('/championships', championships.getAll);
 // GET /championship/:championshipId
 router.get('/championship/:championshipId', championships.getChampionship);
 // POST /championship
-router.get('/championship', championships.addChampionship);
+router.post('/championship', championships.addChampionship);
 
 //CONTESTANTS
 // GET /contestants
