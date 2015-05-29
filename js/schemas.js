@@ -104,48 +104,9 @@ var _userTeamSchema = new mongoose.Schema({
 exports.notification = _notificationSchema;
 exports.transaction = _transactionSchema;
 exports.user = _userSchema;
-//exports.budget = _budgetSchema;
 exports.player = _playerSchema;
 exports.contestant = _contestantSchema;
 exports.championship = _championshipSchema;
 exports.playerMatch = _playerMatchSchema;
 exports.teamMatch = _teamMatchSchema;
 exports.match = _matchSchema;
-
-
-var _hospitalSchema = new mongoose.Schema(
-{
-	institutionType: String,
-	name: String,
-	type: String,
-	address: String,
-	phone: String,
-	location: {type: [Number], index: '2d'},
-	tags: String,
-	checkin: Number
-});
-
-var _checkinSchema = new mongoose.Schema({
-	userId: {type: String},
-	hospitalId: {type: String},
-	dateIn: {type: Date, required: true },
-	dateOut: {type: Date },
-	status: Boolean,
-	estimatedWaitingTime: Number,
-	waitingTime: Number
-});
-
-var _commentsSchema = new mongoose.Schema({
-	userName: String,
-	userThumb: String,
-	hospitalId: String,
-	date: Date,
-	comment: String,
-	thumbsUp: Number,
-	thumbsDown: Number
-});
-
-
-exports.hospital = _hospitalSchema;
-exports.checkin = _checkinSchema;
-exports.comment = _commentsSchema;

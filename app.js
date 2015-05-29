@@ -19,9 +19,10 @@ var morgan = require('morgan');
 var cors = require('cors');
 
 // Bring in route services
-var hospitals = require('./routes/hospitals');
 var users = require('./routes/users');
-var comments = require('./routes/comments')
+var championships = require('./routes/championships');
+var contestants = require('./routes/contestants');
+var players = require('./routes/players');
 
 // Initialize & Configure Express Server
 var app = express();
@@ -48,8 +49,9 @@ router.get('/', function (req, res) {
 });
 
 // Define service routes
-// POST /users - adiciona um novo user
-router.post('/users', users.addUser);
+// POST /user - adiciona um novo user
+router.post('/user', users.addUser);
+// GET /users
 router.get('/users', users.getAll);
 // GET /users/:uid - busca user por user id (uid)
 router.get('/user/:uid', users.getUsers);
@@ -57,31 +59,37 @@ router.get('/user/:uid', users.getUsers);
 router.get('/user/:uid/notifications', users.getUserNotifications);
 // POST /user/:uid/notification - adiciona notificação ao usuário
 router.post('/user/:uid/notification', users.addUserNotification);
+//POST /user/:uid:/transaction
+router.post('/user/:uid/transaction', users.addUserTransactions);
+//POST /user/:uid/transaction/:transactionId/changeStatus
+router.post('/user/:uid/transaction/:transactionId/changeStatus', users.changeTransactionStatus);
+//DELETE /user/:uid
+router.delete('/user/:uid', users.removeUser);
 
+// CHAMPIONSHIPS
+// GET /championships
+router.get('/championships', championships.getAll);
+// GET /championship/:championshipId
+router.get('/championship/:championshipId', championships.getChampionship);
+// POST /championship
+router.get('/championship', championships.addChampionship);
 
+//CONTESTANTS
+// GET /contestants
+router.get('/contestants', contestants.getAll);
+//GET /contestant/:contestantId
+router.get('/contestant/:contestantId', contestants.getContestant);
+//POST /contestant
+router.post('/contestant', contestants.addContestant);
 
-// GET /hospital/:id/comments - busca todos os comments do hospital
-router.get('/hospital/:id/comments', comments.getComments)
-// POST /hospital/:id/comments - {uid: 123, comment: 'fail'}
-router.post('/hospital/:id/comments', comments.postComment)
-// POST /comments/:id/up - thumbs up no comentario
-router.post('/comments/:id/up', comments.like)
-// POST /comments/:id/down - thumbs down no comentario
-router.post('/comments/:id/down', comments.dislike)
+//PLAYERS
+//GET /players
+router.get('/players', players.getAll);
+//GET /player/:playerId
+router.get('/player/:playerId', players.getPlayer);
+//POST /player
+router.post('/player', players.addPlayer);
 
-// GET /hospitals - busca todos os hospitals perto dele
-router.get('/hospitals', hospitals.getHospitals)
-// POST /hospital/:id/checkin - {uid: 123, estimatedWaitingTime: 1.5}
-router.post('/hospital/:id/checkin', hospitals.checkIn)
-// POST /checkin/:id/checkout - {uid: 123, waitingTime: 1}
-router.post('/checkin/:id/checkout', hospitals.checkOut)
-// DELETE /hospital/:id/checkin - ?uid:123
-router.delete('/hospital/:id/checkin', hospitals.uncheck)
-
-router.get('/healthcheck', function (req, res)
-{
-    res.status(200).send();
-});
 
 // Assign the router to everything under /api
 app.use('/api/', router);

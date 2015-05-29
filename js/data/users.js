@@ -193,15 +193,11 @@ var _getAll = function() {
 	return deferred.promise;
 }
 
-//_addUser('roger', 'r@r.com', 'r', 'r2', 'normal', 'hehe.png', 'token123');
-//_addUserNotification('555c8d456578550300d8345a', 'notificacao 2', null, '555c8d456578550300d8345a');
-//_addUserTransaction('555c8d456578550300d8345a', 50, 3);
-_changeTransactionStatus('555c8d456578550300d8345a', '555c91a4558713683a1968ac', 3, 'Transação efetuada com sucesso!!!!');
-
 exports.getUser = _getUser;
 exports.addUser = _addUser;
 exports.getUserNotifications = _getUserNotifications;
 exports.addUserNotification = _addUserNotification;
 exports.getAll = _getAll;
 exports.removeUser = _removeUser;
+exports.addUserTransaction = _addUserTransaction;
 exports.changeTransactionStatus = _changeTransactionStatus;
