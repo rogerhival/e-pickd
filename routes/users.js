@@ -1,7 +1,7 @@
 var httpresponse = require('../js/response.js');
 var Users = require('../js/data/users.js');
 
-// POST /users - adiciona um novo user
+// POST /user - adiciona um novo user
 exports.addUser = function(req, res) {
     var name = req.body.name;
     var email = req.body.email;
@@ -16,14 +16,15 @@ exports.addUser = function(req, res) {
     });
 }
 
+// GET /users
 exports.getAll = function(req, res){
     Users.getAll().then(function(results){
         res.status(200).json(results);
     });
 }
 
-// GET /users/:uid - busca user por user id (uid)
-exports.getUsers = function(req, res) {
+// GET /user/:uid - busca user por user id (uid)
+exports.getUser = function(req, res) {
     var userId = req.param.uid;
 
     Users.getUser(userId).then(function(results){
@@ -31,6 +32,7 @@ exports.getUsers = function(req, res) {
     });
 }
 
+// GET /user/:uid/notifications
 exports.getUserNotifications = function(req, res){
     var userId = req.param.uid;
 
@@ -39,6 +41,8 @@ exports.getUserNotifications = function(req, res){
     });
 }
 
+
+// POST /user/:uid/notification {text: 'blabla', whoChampionshipId: 1, whoUserId: 2}
 exports.addUserNotification = function(req, res){
     var userId = req.param.uid;
     var text = req.body.text;
@@ -46,6 +50,28 @@ exports.addUserNotification = function(req, res){
     var whoUserId = req.body.whoUserId;
 
     Users.addUserNotification(userId, text, whoChampionshipId, whoUserId).then(function(results){
+        res.status(200).json(results);
+    });
+}
+
+
+//POST /user/:uid/removeUser
+exports.removeUser = function(req, res){
+    var userId = req.param.uid;
+
+    Users.removeUser(userId).then(function(results){
+        res.status(200).json(results);
+    });
+}
+
+//POST /user/:uid/transaction/:transactionId/changeTransactionStatus {newStatus: 1, description: 'hahaha'}
+exports.changeTransactionStatus = function(req, res){
+    var userId = req.param.uid;
+    var transactionId = req.param.transactionId;
+    var newStatus = req.body.newStatus;
+    var description = req.body.description;
+
+    Users.changeTransactionStatus(userId, transactionId, newStatus, description).then(function(results){
         res.status(200).json(results);
     });
 }

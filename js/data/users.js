@@ -2,9 +2,11 @@
 var mongoose = require('../connect.js').client;
 var schemas = require('../schemas.js');
 var Q = require('q');
+var underscore = require('underscore');
 
 var users = mongoose.model('user', schemas.user);
 var notifications = mongoose.model('notification', schemas.notification);
+var transactions = mongoose.model('transaction', schemas.transaction);
 
 var _getUser = function(userId) {
 
@@ -72,12 +74,11 @@ var _getUserNotifications = function(userId) {
 }
 
 var _addUserNotification = function(userId, text, whoChampionshipId, whoUserId) {
-
 	var deferred = Q.defer();
 
 	users.findById(userId, function(err, user){
 		if(err){
-			deferred.reject(err);
+			deferred.reject(new Error(err));
 			console.dir(err);
 		} else{
 			user.notifications.push(new notifications({
@@ -87,14 +88,89 @@ var _addUserNotification = function(userId, text, whoChampionshipId, whoUserId) 
 			}));
 			user.save(function(err){
 				if(err){
+					deferred.reject(new Error(err));
 					console.dir(err);
 				} else {
+					deferred.resolve(user);
 					console.log('adicionada notificação ao usuário ' + user.username);
 				}
 			});
 
-			deferred.resolve(user);
+			
 		}
+	});
+
+	return deferred.promise;
+}
+
+//transactionType = 1-débito, 2-crédito, 3-prêmio
+//status = 1 - em análise, 0 - cancelado - 2 - em andamento, 3 - concluída 
+var _addUserTransaction = function(userId, value, transactionType){
+	var deferred = Q.defer();
+
+	users.findById(userId, function(err, user){
+		if(err){
+			deferred.reject(new Error(err));
+			console.dir(err);
+		} else{
+			user.budget.transactions.push(new transactions({
+				transactionType: transactionType,
+				value: value,
+				date: new Date().getTime(),
+				status: 1
+			}));
+			
+			user.save(function(err){
+				if(err){
+					deferred.reject(new Error(err));
+					console.dir(err);
+				} else {
+					deferred.resolve(user);
+					console.log('adicionada transação ao usuário ' + user.username);
+				}
+			});
+		}
+	});
+
+	return deferred.promise;
+}
+
+var _changeTransactionStatus = function(userId, transactionId, newStatus, description){
+	var deferred = Q.defer();
+
+	users.findById(userId, function(err, user){
+		var budgetCurrentValue = user.budget.value;
+
+		var transaction = underscore.find(user.budget.transactions, function(object){
+			return object.id == transactionId;
+		});
+
+		transaction.status = newStatus;
+		transaction.description = description;
+
+		//Se estiver concluída a ação, pode mexer na carteira do usuário com o valor da transação
+		if(newStatus == 3) {
+			switch(transaction.transactionType){
+					case 1:
+					case 3:
+						budgetCurrentValue += transaction.value;
+						break;
+					case 2:
+						budgetCurrentValue -= transaction.value;
+						break;
+			}
+			user.budget.value = budgetCurrentValue;
+		}
+
+		user.save(function(err){
+			if(err){
+				deferred.reject(new Error(err));
+				console.dir(err);
+			} else {
+				deferred.resolve(user);
+				console.log('alterada a transação do usuário ' + user.username);
+			}
+		});
 	});
 
 	return deferred.promise;
@@ -103,7 +179,6 @@ var _addUserNotification = function(userId, text, whoChampionshipId, whoUserId) 
 var _getAll = function() {
 	var deferred = Q.defer();
 
-	//get users
 	users.find().exec(function(err, users){
 		if(err) {
 			console.dir(err);
@@ -118,7 +193,10 @@ var _getAll = function() {
 	return deferred.promise;
 }
 
-_addUser('roger', 'r@r.com', 'r', 'r2', 'normal', 'hehe.png', 'token123');
+//_addUser('roger', 'r@r.com', 'r', 'r2', 'normal', 'hehe.png', 'token123');
+//_addUserNotification('555c8d456578550300d8345a', 'notificacao 2', null, '555c8d456578550300d8345a');
+//_addUserTransaction('555c8d456578550300d8345a', 50, 3);
+_changeTransactionStatus('555c8d456578550300d8345a', '555c91a4558713683a1968ac', 3, 'Transação efetuada com sucesso!!!!');
 
 exports.getUser = _getUser;
 exports.addUser = _addUser;
@@ -126,3 +204,4 @@ exports.getUserNotifications = _getUserNotifications;
 exports.addUserNotification = _addUserNotification;
 exports.getAll = _getAll;
 exports.removeUser = _removeUser;
+exports.changeTransactionStatus = _changeTransactionStatus;

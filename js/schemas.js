@@ -13,7 +13,8 @@ var _transactionSchema = new mongoose.Schema({
 	transactionType: {type:String},
 	value: {type:Number},
 	date: {type:Date},
-	status:{type:String}
+	status:{type:String},
+	description:{type:String}
 });
 
 var _userSchema = new mongoose.Schema({
@@ -32,21 +33,14 @@ var _userSchema = new mongoose.Schema({
 	}
 });
 
-// var _budgetSchema = new mongoose.Schema({
-// 	_id: {type: Number},
-// 	userId: {type: Number},
-// 	value: {type:Number}
-// });
-
 var _playerSchema = new mongoose.Schema({
-	_id: {type:Number},
 	name: {type:String},
 	thumbURL: {type:String},
-	position: {type: String}
+	position: {type: String},
+	contestantId: {type: mongoose.Schema.Types.ObjectId, ref: 'contestant'}
 });
 
 var _contestantSchema = new mongoose.Schema({
-	_id: {type: Number},
 	name: {type:String},
 	acronym: {type: String},
 	location: {type:String},
@@ -55,16 +49,13 @@ var _contestantSchema = new mongoose.Schema({
 });
 
 var _championshipSchema = new mongoose.Schema({
-	_id: {type:Number},
 	tournamentName: {type: String},
     namePublic: {type:String},
     contestants: [_contestantSchema],
     isFinished: {type:Boolean},
     dateBegin: {type:Date},
     dateEnd: {type:Date},
-    noVods: {type:Number},
     season: {type:String},
-    published: {type:Boolean},
     winner: {type:String}
 });
 
